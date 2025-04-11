@@ -68,11 +68,11 @@ sudo systemctl restart postgresql
 # 4. Crear usuario, base de datos y cargar SQL
 # -------------------------------------
 echo "[ADMIN] 👤 Creando usuario 'vagrant' y base de datos 'infra_db'..."
-sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='vagrant'" | grep -q 1 || \
-sudo -u postgres psql -c "CREATE USER vagrant WITH PASSWORD 'vagrant';"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='vagrant'" 2>/dev/null | grep -q 1 || \
+sudo -u postgres psql -c "CREATE USER vagrant WITH PASSWORD 'vagrant';" 2>/dev/null
 
-sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='infra_db'" | grep -q 1 || \
-sudo -u postgres psql -c "CREATE DATABASE infra_db OWNER vagrant;"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='infra_db'" 2>/dev/null | grep -q 1 || \
+sudo -u postgres psql -c "CREATE DATABASE infra_db OWNER vagrant;" 2>/dev/null
 
 # Usar ruta del archivo montado por Vagrant
 SQL_FILE="/vagrant/data.sql"
@@ -80,8 +80,8 @@ echo "[ADMIN] 🗂️ Cargando archivo SQL: $SQL_FILE"
 sudo -u postgres psql -d infra_db -f "$SQL_FILE" 2>/dev/null
 
 echo "[ADMIN] ✅ Dando permisos de lectura al usuario 'vagrant'..."
-sudo -u postgres psql -d infra_db -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO vagrant;"
-sudo -u postgres psql -d infra_db -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO vagrant;"
+sudo -u postgres psql -d infra_db -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO vagrant;" 2>/dev/null
+sudo -u postgres psql -d infra_db -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO vagrant;" 2>/dev/null
 
 echo "[ADMIN] 🔍 Probando acceso del usuario 'vagrant' a la base de datos..."
 PGPASSWORD=vagrant psql -U vagrant -d infra_db -h 127.0.0.1 -c "\dt" && \
