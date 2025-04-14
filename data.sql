@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS bastions (
 );
 
 INSERT INTO bastions (bastion_ip, country, environment) VALUES
-('192.168.57.10', 'Chile', 'unico'),
+('192.168.20.10', 'Chile', 'unico'),
 ('10.20.20.1', 'Peru', 'production'),
 ('10.20.20.2', 'Peru', 'non_production'),
 ('10.20.20.3', 'Peru', 'non_banking'),
@@ -21,7 +21,7 @@ INSERT INTO bastions (bastion_ip, country, environment) VALUES
 ('10.30.30.2', 'Colombia', 'site_2');
 
 INSERT INTO machines (name, ip, country, environment) VALUES
-('destination', '192.168.58.10', 'Chile', 'unico'),
+('destination', '192.168.10.10', 'Chile', 'unico'),
 ('test-server-1', '192.168.20.10', 'Peru', 'production'),
 ('test-server-2', '192.168.21.10', 'Peru', 'non_production'),
 ('test-server-3', '192.168.22.10', 'Peru', 'non_banking'),
