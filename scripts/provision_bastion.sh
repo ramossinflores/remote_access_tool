@@ -9,13 +9,13 @@ systemctl enable --now sshd
 # Esperar a destination (192.168.10.10:22)
 echo "[BASTION] Esperando a destination..."
 while ! nc -z 192.168.10.10 22; do
-  echo "⏳ Esperando a que destination (192.168.10.10:22) esté disponible..."
+  echo "Esperando a que destination (192.168.10.10:22) esté disponible..."
   sleep 2
 done
 
-echo "[BASTION] ⏳ Esperando a que destination permita conexión SSH con contraseña..."
+echo "[BASTION] Esperando a que destination permita conexión SSH con contraseña..."
 while ! sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 vagrant@192.168.10.10 "echo 'SSH OK'" >/dev/null 2>&1; do
-  echo "⌛ Aún no responde por SSH... reintentando"
+  echo "Aún no responde por SSH... reintentando"
   sleep 2
 done
 
@@ -26,7 +26,7 @@ if [ ! -f /home/vagrant/.ssh/id_rsa ]; then
 fi
 
 # Agregar la clave del host destination al known_hosts de bastion (usuario vagrant)
-echo "[BASTION] 📥 Registrando clave de host de destination..."
+echo "[BASTION] Registrando clave de host de destination..."
 sudo -u vagrant ssh-keygen -R 192.168.10.10 >/dev/null 2>&1
 sudo -u vagrant ssh-keyscan -H 192.168.10.10 >> /home/vagrant/.ssh/known_hosts
 
@@ -48,10 +48,10 @@ sleep 3
 
 for i in {1..3}; do
   if sudo -u vagrant ssh -o BatchMode=yes -o ConnectTimeout=5 vagrant@192.168.10.10 "echo OK" 2>/dev/null; then
-    echo "[BASTION] ✅ Conexión establecida con destination sin contraseña"
+    echo "[BASTION] Conexión establecida con destination sin contraseña"
     break
   else
-    echo "[BASTION] 🔁 Reintentando conexión..."
+    echo "[BASTION] Reintentando conexión..."
     sleep 2
   fi
 done
