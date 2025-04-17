@@ -1,27 +1,9 @@
 #!/bin/bash
 
-echo "[DESTINATION] Iniciando configuración..."
+source /vagrant/scripts/funciones_comunes.sh
 
-# Verificar e instalar openssh-server si no está presente
-if ! rpm -q openssh-server &> /dev/null; then
-  echo "[DESTINATION] Instalando openssh..."
-  dnf install -y openssh-server
-else
-  echo "[DESTINATION] openssh ya está instalado"
-fi
-
-# Instalar nmap-ncat si se desea mantener para depuración (opcional)
-if ! rpm -q nmap-ncat &> /dev/null; then
-  echo "[DESTINATION] Instalando ncat..."
-  dnf install -y nmap-ncat
-else
-  echo "[DESTINATION] nmap-ncat ya está instalado"
-fi
-
-# Habilitar e iniciar el servicio SSH
-echo "[DESTINATION] Habilitando y arrancando sshd..."
-systemctl enable sshd
-systemctl start sshd
+instalar_paquetes_base "DESTINATION"
+habilitar_ssh "DESTINATION"
 
 # Preparar la carpeta .ssh del usuario vagrant para aceptar claves públicas
 echo "[DESTINATION] Configurando carpeta ~/.ssh del usuario vagrant..."

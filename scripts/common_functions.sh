@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Funciòn para actualizar e instalar los paquetes base
+instalar_paquetes_base() {
+    nombre_host=$1
+    echo "[$nombre_host] Actualizando paquetes..."
+    dnf update
+    echo "[$nombre_host] Instalando paquetes base..."
+    dnf install -y openssh-server nmap-ncat sshpass
+}
+
+
+# Funciòn para habilitar SSH
+
+habilitar_ssh() {
+    nombre_host=$1
+    echo "[[$nombre_host]] Habilitando SSH..."
+    systemctl enable --now sshd
+
+}
+
+# Función para esperar a que un puerto esté disponible en una IP
+esperar_puerto() {
+    nombre_host=$1
+    host=$2
+    puerto=$3
+    timeout_max=60
+    wait_interval=2
+    waited=0
+
+    echo "[$nombre_host] Esperando a $host:$puerto..."
+
+    while ! nc -z $host $puerto; do
+    if [ $waited -ge $timeout_max ]; then
+    echo "[$nombre_host][ERROR] Tiempo de espera agotado. $host no está disponible en el puerto $puerto"
+    return 1
+    fi
+    echo "[$nombre_host] Esperando... ($waited/$timeout_max segundos)"
+    sleep "$wait_interval"
+    waited=$((waited + wait_interval))
+    done
+
+    echo "[$nombre_host] $host:$puerto está disponible"
+    return 0
+    }
+
+# Función para generar clave SSH
+
+generar_clave_ssh() {
+    nombre_host=$1
+    if [ ! -f /home/vagrant/.ssh/id_rsa ]; then
+        echo "[$nombre_host]  Generando clave RSA..."
+        sudo -u vagrant ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa
+    fi
+}
+
+# Función para verificar la conexión SSH
+
+verificar_conexion_ssh() {
+    nombre_host=$1
+    ip_destino=$2
+
+    echo "[$nombre_host] Verificando conexión SSH sin contraseña a $ip_destino..."
+
+    if sudo -u vagrant ssh -o BatchMode=yes -o ConnectTimeout=5 vagrant@$ip_destino "echo OK" 2>/dev/null; then
+        echo "[$nombre_host] Conexión establecida con $ip_destino"
+        return 0
+    else
+        echo "[$nombre_host][ERROR] Fallo en la conexión con $ip_destino"
+        return 1
+    fi
+    }
