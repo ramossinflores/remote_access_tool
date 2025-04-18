@@ -163,8 +163,7 @@ def establecer_sesion_interactiva(stdin, stdout):
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, oldtty)
 
 
- #---------------------------- Main ----------------------------
-       
+#---------------------------- Lógica principal ----------------------------
 
 def main():
     if len(sys.argv) < 2:
