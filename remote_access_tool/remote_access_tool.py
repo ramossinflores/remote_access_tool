@@ -103,9 +103,8 @@ def obtener_maquina_y_bastion(nombre_o_ip):
 SSH_USER = os.getenv("SSH_USER")
 SSH_KEY_PATH = os.getenv("SSH_KEY_PATH", "~/.ssh/id_rsa")
 
-
+# Establece la conexión SSH utilizando claves
 def conectar_ssh_con_claves(hostname, username, clave_privada, bastion=None):
-    # Establece la conexión SSH utilizando claves
     ssh_client  = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -136,14 +135,18 @@ def conectar_ssh_con_claves(hostname, username, clave_privada, bastion=None):
         return None
     
 
+#---------------------------- Sesión interactiva  ----------------------------
+
+
+#Crea una sesión interactiva con entrada/salida redireccionadas al usuario
+
 def establecer_sesion_interactiva(stdin, stdout):
-    #Crea una sesión interactiva con entrada/salida redireccionadas al usuario
     oldtty = termios.tcgetattr(sys.stdin)
     try:
         tty.setraw(sys.stdin.fileno())
         tty.setcbreak(sys.stdin.fileno())
         while True:
-            r, _, _ = select.select([sys.stdin, stdout.channel], [], [])
+            r, w, e = select.select([sys.stdin, stdout.channel], [], [])
             if sys.stdin in r:
                 data = os.read(sys.stdin.fileno(), 1024)
                 if not data:
