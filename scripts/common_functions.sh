@@ -54,6 +54,36 @@ generar_clave_ssh() {
     fi
 }
 
+# Función para registrar un host remoto en known_hosts y evitar advertencias de autenticación
+registrar_known_host() {
+    nombre_host=$1
+    ip_destino=$2
+
+    echo "[$nombre_host] Registrando $ip_destino en known_hosts..."
+
+    # Evita duplicados
+    sudo -u vagrant ssh-keygen -R "$ip_destino" 2>/dev/null
+    sudo -u vagrant ssh-keyscan -H "$ip_destino" >> /home/vagrant/.ssh/known_hosts 2>/dev/null
+    chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
+}
+# Función para copiar la clave pública al host remoto usando sshpass
+copiar_clave_ssh() {
+    nombre_host=$1
+    ip_destino=$2
+    puerto=22
+
+    echo "[$nombre_host] Copiando clave pública a $ip_destino..."
+
+    # Intenta hasta 3 veces por si tarda en estar listo
+    for intento in {1..3}; do
+        sudo -u vagrant sshpass -p "vagrant" ssh-copy-id -o StrictHostKeyChecking=no -p "$puerto" vagrant@$ip_destino && break
+        echo "[$nombre_host] Reintentando copia de clave ($intento)..."
+        sleep 2
+    done
+}
+
+
+
 # Función para verificar la conexión SSH
 
 verificar_conexion_ssh() {
