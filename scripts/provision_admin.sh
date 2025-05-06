@@ -2,7 +2,7 @@
 #!/bin/bash
 
 # Cargar funciones comunes
-source /vagrant/scripts/funciones_comunes.sh
+source /vagrant/scripts/common_functions.sh
 
 instalar_paquetes_base "ADMIN-SERVER"
 habilitar_ssh "ADMIN-SERVER"
@@ -67,13 +67,12 @@ sudo -u postgres psql -d infra_db -c "GRANT SELECT ON ALL TABLES IN SCHEMA publi
 sudo -u postgres psql -d infra_db -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO vagrant;" 2>/dev/null
 
 echo "[ADMIN] Probando acceso del usuario 'vagrant' a la base de datos..."
-pgpassword=vagrant psql -U vagrant -d infra_db -h 127.0.0.1 -c "\dt" && \
-echo "[ADMIN] Conexión de prueba exitosa con el usuario 'vagrant'" || \
+PGPASSWORD=vagrant psql -U vagrant -d infra_db -h 127.0.0.1 -c "\dt"echo "[ADMIN] Conexión de prueba exitosa con el usuario 'vagrant'" || \
 echo "[ADMIN] Error de conexión con el usuario 'vagrant'"
 
 
 echo "[ADMIN] Instalando Python, pip y entorno virtual..."
-sudo dnf install -y python3 python3-pip python3-virtualenv
+sudo dnf install -y python3 python3-pip python3-venv
 
 # Crear entorno virtual si no existe
 venv_path="/home/vagrant/venv"

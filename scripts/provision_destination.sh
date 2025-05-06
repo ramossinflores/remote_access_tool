@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /vagrant/scripts/funciones_comunes.sh
+source /vagrant/scripts/common_functions.sh
 
 instalar_paquetes_base "DESTINATION"
 habilitar_ssh "DESTINATION"
