@@ -1,8 +1,9 @@
 # 🛠️ Remote Access SSH Tool 🦘 - Proyecto Integrado ASIR | Entorno de pruebas
 
-Este proyecto forma parte del Proyecto Integrado del ciclo formativo de Grado Superior en Administración de Sistemas Informáticos en Red (ASIR). Simula un entorno real de acceso remoto mediante salto SSH entre múltiples máquinas, usando Vagrant y VirtualBox. El objetivo es probar un script de automatización llamado `remote_access_tool.py`, que recibe como argumento el nombre o la IP del servidor destino, y accede a través de uno o varios bastiones intermedios. mediante salto SSH entre múltiples máquinas. 
-Este es un primer escenario y aún estoy trabajando en el script WIP 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+Este proyecto forma parte del Proyecto Integrado del ciclo formativo de Grado Superior en Administración de Sistemas Informáticos en Red (ASIR). Simula un entorno real de acceso remoto mediante salto SSH entre múltiples máquinas, usando Vagrant y VirtualBox. El objetivo es probar un script de automatización llamado `remote_access_tool.py`, que recibe como argumento el nombre o la IP del servidor destino, y accede a través de uno o varios bastiones intermedios. mediante salto SSH entre múltiples máquinas.
 
+ 🚧 Work In Progress – en desarrollo activo.
+o9
 ## 🔧 Escenario implementado
 
 - `admin-server`: contiene el script de automatización, la base de datos PostgreSQL y un entorno virtual Python.
@@ -15,18 +16,47 @@ Las máquinas están en redes distintas y no comparten relación directa fuera d
 
 ```
 entorno_pruebas/
+entorno_pruebas/
 ├── Vagrantfile
 ├── data.sql
-├── remote_access_tool/
-│   ├── requirements.txt
-│   └── remote_access_tool.py
+├── .env
+├── .gitignore
 ├── scripts/
 │   ├── provision_admin.sh
 │   ├── provision_bastion.sh
 │   ├── provision_destination.sh
 │   └── common_functions.sh
-└── .gitignore
+├── remote_access_tool/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── db.py
+│   ├── ssh.py
+│   ├── interactive.py
+│   ├── main.py
+│   ├── utils.py
+│   ├── requirements.txt
+│   └── app.log
+└── tests/
+    ├── unit/
+    │   └── test_*.py
+    ├── integration/
+    │   └── test_*.py
+    └── functional/
+        └── test_*.py
 ```
+## 🧪 Tipos de pruebas
+
+- **Unitarias:** verifican funciones individuales como la conexión SSH, validación de parámetros, etc.
+- **Integración:** validan el comportamiento conjunto entre base de datos y lógica de conexión.
+- **Funcionales:** prueban el comportamiento real del sistema con salto SSH y consulta a la base de datos.
+
+Ejecutar todas las pruebas:
+
+```bash
+pytest tests/ -v
+
+```
+
 
 ## 🚀 Requisitos
 
