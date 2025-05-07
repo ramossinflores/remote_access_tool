@@ -201,7 +201,10 @@ def main():
         stdin, stdout, stderr = cliente_bastion.exec_command(comando)
         establecer_sesion_interactiva(stdin, stdout)
     except Exception as e:
-        logging.error(f"Error ejecutando el salto SSH en bastion: {e}")
+        if str(e) == "Socket is closed":
+            logging.info("Sesión cerrada. Canal SSH finalizado") 
+        else:
+            logging.error(f"Error ejecutando el salto SSH en bastion: {e}")
     finally:
         cliente_bastion.close()
 
