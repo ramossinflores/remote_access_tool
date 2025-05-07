@@ -1,5 +1,3 @@
-# tests/test_db.py
-
 import pytest
 from unittest.mock import patch, MagicMock
 from remote_access_tool import db
