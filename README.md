@@ -3,7 +3,7 @@
 Este proyecto forma parte del Proyecto Integrado del ciclo formativo de Grado Superior en Administración de Sistemas Informáticos en Red (ASIR). Simula un entorno real de acceso remoto mediante salto SSH entre múltiples máquinas, usando Vagrant y VirtualBox. El objetivo es probar un script de automatización llamado `remote_access_tool.py`, que recibe como argumento el nombre o la IP del servidor destino, y accede a través de uno o varios bastiones intermedios. mediante salto SSH entre múltiples máquinas.
 
  🚧 Work In Progress – en desarrollo activo.
-o9
+
 ## 🔧 Escenario implementado
 
 - `admin-server`: contiene el script de automatización, la base de datos PostgreSQL y un entorno virtual Python.
@@ -39,16 +39,15 @@ entorno_pruebas/
 └── tests/
     ├── unit/
     │   └── test_*.py
-    ├── integration/
-    │   └── test_*.py
-    └── functional/
+    └── integration/
         └── test_*.py
+   
 ```
+
 ## 🧪 Tipos de pruebas
 
 - **Unitarias:** verifican funciones individuales como la conexión SSH, validación de parámetros, etc.
 - **Integración:** validan el comportamiento conjunto entre base de datos y lógica de conexión.
-- **Funcionales:** prueban el comportamiento real del sistema con salto SSH y consulta a la base de datos.
 
 Ejecutar todas las pruebas:
 
@@ -56,7 +55,6 @@ Ejecutar todas las pruebas:
 pytest tests/ -v
 
 ```
-
 
 ## 🚀 Requisitos
 
@@ -100,7 +98,6 @@ python3 remote_access_tool.py <nombre_o_ip_destino>
 ```
 
 Este script consulta la base de datos `infra_db` para obtener la ruta de salto (bastión y destino) asociada al nombre o IP proporcionado, y establece una conexión SSH usando la lógica de salto desde `admin-server` hacia `destination` a través de `bastion` 🦘
-
 
 ## 👩‍💻 Autoría
 
