@@ -1,6 +1,10 @@
 import sys
 import os
 import logging
+import warnings
+from cryptography.utils import CryptographyDeprecationWarning
+
+warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
 
 from .config import SSH_USER, SSH_KEY_PATH
 from .db import obtener_maquina_y_bastion
