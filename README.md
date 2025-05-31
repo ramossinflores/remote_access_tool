@@ -127,11 +127,15 @@ Este script consulta la base de datos `infra_db` para obtener la ruta de salto (
 Desarrollado por **Laura Ramos Granados**  
 📧 [LinkedIn](https://www.linkedin.com/in/emele-ramos-granados/) |  [GitHub](https://github.com/ramossinflores)
 
----
+## 🧭 Posibles mejoras
+
+En futuras versiones se añadirá soporte para **saltos SSH encadenados a través de múltiples bastiones**, y se refactorizará tanto la lógica del script como la base de datos. El **dashboard web** también será reorganizado en módulos independientes, incorporando autenticación, mejor gestión de errores y mejoras visuales. Se prevé además refactorizar el **HTML, CSS y JavaScript** del panel para optimizar su estructura y estilo, que actualmente se corresponde con el tiempo limitado para ejecutarlo y la flexibilidad de estar en pruebas. Finalmente, se considera migrar el entorno de pruebas a **Docker**, facilitando el despliegue y su integración con CI/CD.
+
+> **Se vienen cambios** 🙏🏾
 
 ## 📄 Licencia
 
-Este es mi **Proyecto Integrado**, que ha sido desarrollado con fines **educativos y de aprendizaje personal** como parte de mis estudios en el ciclo de **Administración de Sistemas Informáticos en Red (ASIR)**.
+Este es mi **Proyecto Integrado**, que ha sido desarrollado con fines **educativos y de aprendizaje personal** como parte de mis estudios en el ciclo de **Administración de Sistemas Informáticos en Red (ASIR)** ❤️.
 
 Lo comparto como estudiante y aprendiz, sin garantías de funcionamiento en entornos productivos.  
 El código puede contener errores, implementaciones mejorables o estar en fase de experimentación.
