@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Selección de Equipo{% endblock %}
+
+{% block content %}
+<div class="form-section fade-in">
+  <h2>Consulta de Equipo Destino</h2>
+<form id="formularioConsulta" action="/consulta" method="POST">
+  <input type="text" name="parametro" id="parametro" placeholder="IP o nombre del servidor" required>
+  <button type="submit">Consultar</button>
+</form>
+
+  <p id="mensajeError" class="mensaje-error"></p>
+</div>
+
+<script>
+  document.getElementById("formularioConsulta").addEventListener("submit", function(e) {
+    const campo = document.getElementById("identificador");
+    const mensaje = document.getElementById("mensajeError");
+    if (!campo.value.trim()) {
+      e.preventDefault();
+      mensaje.textContent = "Por favor introduce una IP o nombre válido.";
+      campo.classList.add("input-error");
+    } else {
+      mensaje.textContent = "";
+      campo.classList.remove("input-error");
+    }
+  });
+</script>
+{% endblock %}
+

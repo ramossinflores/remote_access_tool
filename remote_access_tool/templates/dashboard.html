@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - {{ hostname }}{% endblock %}
+
+{% block content %}
+<!-- Información del sistema -->
+<section class="section info">
+  <h2><i data-lucide="server"></i> Información del sistema</h2>
+  <p><strong>Hostname:</strong> {{ hostname }}</p>
+  <p><strong>Uptime:</strong> {{ uptime }}</p>
+</section>
+
+<!-- Gráficos en tarjetas -->
+<div class="dashboard-grid">
+  <div class="card">
+    <h2><i data-lucide="cpu"></i> Uso de CPU</h2>
+    <canvas id="cpuChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2><i data-lucide="memory-stick"></i> Uso de Memoria</h2>
+    <!-- Temporal para depuración -->
+    <p style="font-size: 0.8em;">{{ used_mem }} / {{ total_mem }}</p>
+    <canvas id="memChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2><i data-lucide="hard-drive"></i> Uso de Disco</h2>
+    <canvas id="diskChart"></canvas>
+  </div>
+</div>
+
+<!-- Procesos activos -->
+<section class="section">
+  <h2><i data-lucide="activity"></i> Procesos activos</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for key in procesos[0].keys() %}
+          <th>{{ key }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for proc in procesos %}
+        <tr>
+          {% for value in proc.values() %}
+            <td>{{ value }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- Logs recientes -->
+<section class="section">
+  <h2><i data-lucide="file-text"></i> Logs recientes</h2>
+  <pre>{{ logs }}</pre>
+</section>
+
+<!-- Botón animado de regreso -->
+<div class="container" style="margin: 60px auto 20px; text-align: center; max-width: 320px;">
+    <a href="/" class="button button--pen">
+    <div class="button__wrapper">
+      <span class="button__text">Volver</span>
+    </div>
+    <div class="characterBox">
+      <div class="character wakeup">
+        <div class="character__face"></div>
+        <div class="charactor__face2"></div>
+      </div>
+      <div class="character wakeup">
+        <div class="character__face"></div>
+        <div class="charactor__face2"></div>
+      </div>
+      <div class="character">
+        <div class="character__face"></div>
+        <div class="charactor__face2"></div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<script>
+  // Renderizado de gráficos
+  const cpuChart = new Chart(document.getElementById("cpuChart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Usado", "Libre"],
+      datasets: [{
+        data: [{{ uso_cpu }}, {{ 100 - uso_cpu }}],
+        backgroundColor: ['#3b82f6', '#d1d5db']
+      }]
+    }
+  });
+
+  const memChart = new Chart(document.getElementById("memChart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Usada", "Libre"],
+      datasets: [{
+        data: [{{ used_mem }}, {{ total_mem - used_mem }}],
+        backgroundColor: ['#0ea5e9', '#e2e8f0']
+      }]
+    }
+  });
+
+  const diskChart = new Chart(document.getElementById("diskChart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Usado", "Libre"],
+      datasets: [{
+        data: [{{ uso_disco }}, {{ 100 - uso_disco }}],
+        backgroundColor: ['#1e40af', '#93c5fd']
+      }]
+    }
+  });
+
+  lucide.createIcons();
+</script>
+{% endblock %}
