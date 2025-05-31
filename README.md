@@ -122,11 +122,6 @@ python3 -m remote_access_tool.main <nombre_o_ip_destino>
 
 Este script consulta la base de datos `infra_db` para obtener la ruta de salto (bastión y destino) asociada al nombre o IP proporcionado, y establece una conexión SSH usando la lógica de salto desde `admin-server` hacia `destination` a través de `bastion` 🦘
 
-## 👩‍💻 Autoría
-
-Desarrollado por **Laura Ramos Granados**  
-📧 [LinkedIn](https://www.linkedin.com/in/emele-ramos-granados/) |  [GitHub](https://github.com/ramossinflores)
-
 ## 🧭 Posibles mejoras
 
 En futuras versiones se añadirá soporte para **saltos SSH encadenados a través de múltiples bastiones**, y se refactorizará tanto la lógica del script como la base de datos. El **dashboard web** también será reorganizado en módulos independientes, incorporando autenticación, mejor gestión de errores y mejoras visuales. Se prevé además refactorizar el **HTML, CSS y JavaScript** del panel para optimizar su estructura y estilo, que actualmente se corresponde con el tiempo limitado para ejecutarlo y la flexibilidad de estar en pruebas. Finalmente, se considera migrar el entorno de pruebas a **Docker**, facilitando el despliegue y su integración con CI/CD.
@@ -142,3 +137,8 @@ El código puede contener errores, implementaciones mejorables o estar en fase d
 
 Eres libre de usarlo, adaptarlo o mejorarlo citando la fuente original 💛
 Toda sugerencia o corrección es bienvenida, ya que me encuentro en pleno proceso de formación 🙌
+
+## 👩‍💻 Autoría
+
+Desarrollado por **Laura Ramos Granados**  
+📧 [LinkedIn](https://www.linkedin.com/in/emele-ramos-granados/) |  [GitHub](https://github.com/ramossinflores)
