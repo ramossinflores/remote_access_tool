@@ -16,33 +16,56 @@ Las máquinas están en redes distintas y no comparten relación directa fuera d
 
 ```
 entorno_pruebas/
-entorno_pruebas/
 ├── Vagrantfile
 ├── data.sql
 ├── .env
 ├── .gitignore
-├── scripts/
-│   ├── provision_admin.sh
-│   ├── provision_bastion.sh
-│   ├── provision_destination.sh
-│   └── common_functions.sh
+├── README.md
 ├── remote_access_tool/
 │   ├── __init__.py
+│   ├── app.py                 # Interfaz web con Flask (Dashboard en desarrollo)
 │   ├── config.py
 │   ├── db.py
-│   ├── ssh.py
 │   ├── interactive.py
-│   ├── main.py
+│   ├── main.py                # Script CLI principal
+│   ├── ssh.py
 │   ├── utils.py
 │   ├── requirements.txt
-│   └── app.log
-└── tests/
-    ├── unit/
-    │   └── test_*.py
-    └── integration/
-        └── test_*.py
-   
+│   ├── static/
+│   │   └── css/
+│   │       └── style.css
+│   └── templates/
+│       ├── base.html
+│       ├── dashboard.html
+│       └── index.html
+├── scripts/
+│   ├── common_functions.sh
+│   ├── provision_admin.sh
+│   ├── provision_bastion.sh
+│   └── provision_destination.sh
+├── tests/
+│   ├── integration/
+│   │   ├── test_parametro_invalido.py
+│   │   └── test_salto_completo.py
+│   └── unit/
+│       ├── __init__.py
+│       ├── test_db.py
+│       └── test_ssh.py
+
 ```
+
+## 📊 Interfaz web (Dashboard)
+
+Se encuentra en desarrollo una **interfaz web de administración** construida con **Flask**, ubicada en `remote_access_tool/app.py`, que permite lanzar consultas sobre servidores destino mediante nombre o IP.
+
+El dashboard actualmente:
+
+- Consulta la base de datos.
+- Ejecuta el salto SSH automáticamente.
+- Muestra información del sistema remoto (`hostname`, `uptime`, uso de CPU, disco y procesos).
+- Usa plantillas HTML con `Chart.js` y estilos CSS propios.
+
+> ⚠️ *Este módulo está en construcción. El código aún no ha sido refactorizado ni optimizado para producción.*
 
 ## 🧪 Tipos de pruebas
 
@@ -92,9 +115,9 @@ Una vez el entorno está listo, se puede acceder a `admin-server` y ejecutar el 
 
 ```bash
 vagrant ssh admin-server
-cd /vagrant/remote_access_tool
+cd /vagrant/
 source ~/venv/bin/activate
-python3 remote_access_tool.py <nombre_o_ip_destino>
+python3 -m remote_access_tool.main <nombre_o_ip_destino>
 ```
 
 Este script consulta la base de datos `infra_db` para obtener la ruta de salto (bastión y destino) asociada al nombre o IP proporcionado, y establece una conexión SSH usando la lógica de salto desde `admin-server` hacia `destination` a través de `bastion` 🦘
@@ -108,4 +131,10 @@ Desarrollado por **Laura Ramos Granados**
 
 ## 📄 Licencia
 
-Proyecto desarrollado con fines educativos. Puedes usarlo, adaptarlo o expandirlo libremente 💛
+Este es mi **Proyecto Integrado**, que ha sido desarrollado con fines **educativos y de aprendizaje personal** como parte de mis estudios en el ciclo de **Administración de Sistemas Informáticos en Red (ASIR)**.
+
+Lo comparto como estudiante y aprendiz, sin garantías de funcionamiento en entornos productivos.  
+El código puede contener errores, implementaciones mejorables o estar en fase de experimentación.
+
+Eres libre de usarlo, adaptarlo o mejorarlo citando la fuente original 💛
+Toda sugerencia o corrección es bienvenida, ya que me encuentro en pleno proceso de formación 🙌
