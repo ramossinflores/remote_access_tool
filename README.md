@@ -19,17 +19,20 @@ entorno_pruebas/
 ├── Vagrantfile
 ├── data.sql
 ├── .env
-├── .gitignore
-├── README.md
+├── scripts/
+│   ├── common_functions.sh
+│   ├── provision_admin.sh
+│   ├── provision_bastion.sh
+│   └── provision_destination.sh
 ├── remote_access_tool/
 │   ├── __init__.py
-│   ├── app.py                 # Interfaz web con Flask (Dashboard en desarrollo)
-│   ├── config.py
-│   ├── db.py
-│   ├── interactive.py
-│   ├── main.py                # Script CLI principal
-│   ├── ssh.py
-│   ├── utils.py
+│   ├── app.py                  # Interfaz web con Flask ( para el dashboard)
+│   ├── config.py               # Carga .env y configuración de logging
+│   ├── db.py                   # Módulo de acceso a PostgreSQL
+│   ├── interactive.py          # Sesión SSH interactiva
+│   ├── main.py                 # Punto de entrada del script CLI
+│   ├── ssh.py                  # Funciones para conexión SSH
+│   ├── utils.py                # Script completo (al inicio, no estaba modular)
 │   ├── requirements.txt
 │   ├── static/
 │   │   └── css/
@@ -38,11 +41,6 @@ entorno_pruebas/
 │       ├── base.html
 │       ├── dashboard.html
 │       └── index.html
-├── scripts/
-│   ├── common_functions.sh
-│   ├── provision_admin.sh
-│   ├── provision_bastion.sh
-│   └── provision_destination.sh
 ├── tests/
 │   ├── integration/
 │   │   ├── test_parametro_invalido.py
@@ -51,6 +49,8 @@ entorno_pruebas/
 │       ├── __init__.py
 │       ├── test_db.py
 │       └── test_ssh.py
+├── .gitignore
+├── README.md
 
 ```
 
